@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind utilities;
+@tailwind components;
+
+@layer utilities {
+  @variants hover {
+    .animate-colors {
+      animation: colors 5s linear infinite;
+    }
+    @keyframes colors {
+      0% {
+        filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast)
+          var(--tw-grayscale) hue-rotate(0deg) var(--tw-invert)
+          var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+      }
+      50% {
+        filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast)
+          var(--tw-grayscale) hue-rotate(360deg) var(--tw-invert)
+          var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+      }
+      100% {
+        filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast)
+          var(--tw-grayscale) hue-rotate(0deg) var(--tw-invert)
+          var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+      }
+    }
+  }
+  .text-outline {
+    -webkit-text-stroke: currentColor;
+    -webkit-text-stroke-width: 3px;
+    -webkit-text-fill-color: transparent;
+  }
+  .text-outline:hover {
+    -webkit-text-fill-color: currentColor;
+  }
+}

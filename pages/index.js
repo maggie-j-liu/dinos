@@ -1,82 +1,62 @@
-import Head from 'next/head'
+import Head from "next/head";
 
-export default function Home() {
+export default function Home({ text }) {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen py-2">
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
-        <h1 className="text-6xl font-bold">
-          Welcome to{' '}
-          <a className="text-blue-600" href="https://nextjs.org">
-            Next.js!
-          </a>
+    <div>
+      <div className={"h-72 flex items-center justify-center relative"}>
+        <div
+          className={
+            "absolute top-0 left-0 w-1/2 h-full bg-gradient-to-r from-red-500 via-yellow-300 to-green-500"
+          }
+        />
+        <div
+          className={
+            "absolute top-0 right-0 w-1/2 h-full bg-gradient-to-r from-green-500 via-blue-400 to-purple-500"
+          }
+        />
+        <h1 className={"text-6xl font-bold relative text-outline text-white"}>
+          Hack Club Dinoooooooooos
         </h1>
-
-        <p className="mt-3 text-2xl">
-          Get started by editing{' '}
-          <code className="p-3 font-mono text-lg bg-gray-100 rounded-md">
-            pages/index.js
-          </code>
-        </p>
-
-        <div className="flex flex-wrap items-center justify-around max-w-4xl mt-6 sm:w-full">
-          <a
-            href="https://nextjs.org/docs"
-            className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Documentation &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Find in-depth information about Next.js features and API.
-            </p>
-          </a>
-
-          <a
-            href="https://nextjs.org/learn"
-            className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Learn &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Learn about Next.js in an interactive course with quizzes!
-            </p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Examples &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Discover and deploy boilerplate example Next.js projects.
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Deploy &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className="flex items-center justify-center w-full h-24 border-t">
-        <a
-          className="flex items-center justify-center"
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className="h-4 ml-2" />
-        </a>
-      </footer>
+      </div>
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 overflow-hidden">
+        {text.map((text, idx) => (
+          <div className={"relative"}>
+            <img
+              key={idx}
+              src={`https://raw.githubusercontent.com/hackclub/dinosaurs/main/${text}`}
+            />
+            <div
+              className={
+                "absolute hover:z-10 hover:-inset-10 hover:blur-xl inset-0 bg-gray-300 hover:bg-blue-300 mix-blend-multiply filter hover:animate-colors brightness-50 hover:brightness-100"
+              }
+            />
+          </div>
+        ))}
+      </div>
     </div>
-  )
+  );
+}
+
+const parse = (text) => {
+  const imageUrls = [];
+  text.split("\n").forEach((line) => {
+    const match = line.match(/!\[\]\(([^\)]+)\)/);
+    if (match) {
+      console.log(match[1]);
+      imageUrls.push(match[1]);
+    }
+  });
+  console.log(imageUrls);
+  return imageUrls;
+};
+
+export async function getStaticProps() {
+  const text = await fetch(
+    "https://raw.githubusercontent.com/hackclub/dinosaurs/main/README.md"
+  ).then((r) => r.text());
+  return {
+    props: {
+      text: parse(text),
+    },
+  };
 }
