@@ -4,8 +4,8 @@ import Modal from "../components/Modal";
 import { FiGithub } from "react-icons/fi";
 
 export default function Home({ images }) {
-  const [mouseX, setMouseX] = useState("0px");
-  const [mouseY, setMouseY] = useState("0px");
+  const [mouseX, setMouseX] = useState("-1000px");
+  const [mouseY, setMouseY] = useState("-1000px");
   const [isOpen, setIsOpen] = useState(false);
   const [modalImage, setModalImage] = useState();
   useEffect(() => {
