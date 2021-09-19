@@ -132,5 +132,6 @@ export async function getStaticProps() {
     props: {
       images: parse(text),
     },
+    revalidate: 3600,
   };
 }
